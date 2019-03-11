@@ -1,6 +1,8 @@
 import React, { Component, Fragment } from 'react';
 import TodoItem from './TodoItem';
 
+import './todolist.css';
+
 class Todolist extends Component {
 
   // 构造函数 constructor
@@ -16,24 +18,26 @@ class Todolist extends Component {
   }
 
   handleBtnClick() {
-    this.setState({
-      list: [...this.state.list, this.state.inputValue],
+    this.setState((prevState) => ({
+      // list: [...this.state.list, this.state.inputValue],
+      list: [...prevState.list, prevState.inputValue],
       inputValue: ''
-    })
+    }));
   }
 
   handleInputChange(e) {
-    this.setState({
-      inputValue: e.target.value
-    })
+    const value = e.target.value;
+    this.setState(() => ({
+      inputValue: value
+    }));
   }
 
   handleItemClick(index) {
-    const list = [...this.state.list];
-    list.splice(index, 1);
-    this.setState({
-      list: list
-    })
+    this.setState((prevState) => {
+      const list = [...prevState.list];
+      list.splice(index, 1);
+      return {list}
+    });
   }
 
   getTodoItems() {
@@ -55,8 +59,15 @@ class Todolist extends Component {
     return (
       <Fragment>
         <div>
-          <input value={this.state.inputValue} onChange={this.handleInputChange}/>
-          <button className='red-btn' style={{background:'red'}} onClick={this.handleBtnClick}>add</button>
+          <input 
+            value    = {this.state.inputValue} 
+            onChange = {this.handleInputChange}
+          />
+          <button
+            className = 'red-btn' 
+            style     = {{background:'red'}} 
+            onClick   = {this.handleBtnClick}
+          >add</button>
         </div>
         <ul>{this.getTodoItems()}</ul>
       </Fragment>

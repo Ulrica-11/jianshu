@@ -14,7 +14,12 @@ class TodoItem extends  Component {
     render() {
         const { content } = this.props;
         return (
-            <div onClick={this.handleDelete}>{content}</div>
+            <div 
+                onClick                 = {this.handleDelete}
+                dangerouslySetInnerHTML = {{__html: content}}>
+                {/* dangerouslySetInnerHTML <h1>标签</h1> 在输入后不转译 */}
+                {/* {content} */}
+            </div>
         )
     }
 }
